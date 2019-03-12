@@ -45,7 +45,7 @@ var synth = new Tone.Synth({
 
 // Sample code to load a sound file
 // NOTE: This sound file is not played in this script
-var clave = new Tone.Player('audio/clave.mp3').toMaster();
+var zedsDead = new Tone.Player('audio/zedsDead.mp3').connect(pitchShift);
 
 // Bind slider value to pitch shift amount
 // Every change in slider value triggers change in pitch shift
