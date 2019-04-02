@@ -3,7 +3,7 @@
 <html lang="en-US" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>TITLE GOES HERE</title>
+  <title>TITLE GOES HERE.</title>
   <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
@@ -45,7 +45,7 @@ var synth = new Tone.Synth({
 
 // Sample code to load a sound file
 // NOTE: This sound file is not played in this script
-var clave = new Tone.Player('audio/clave.mp3').toMaster();
+var zedsDead = new Tone.Player('audio/zedsDead.mp3').connect(pitchShift);
 
 // Bind slider value to pitch shift amount
 // Every change in slider value triggers change in pitch shift
@@ -65,7 +65,7 @@ document.querySelector('#playButton').onclick = function() {
   console.log('The play button has been clicked.');
 
   // Play a middle C, which will sound until the stop button is clicked
-  synth.triggerAttack('C4');
+  zedsDead.start();
 };
 
 // The following block of code will run when the stop button is clicked
