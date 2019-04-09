@@ -3,7 +3,7 @@
 <html lang="en-US" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>TITLE GOES HERE.</title>
+  <title>SOUP</title>
   <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
@@ -16,6 +16,7 @@
   <h2>Click the buttons to make (or stop) some sound:</h2>
   <button id="playButton" class="btn-transport" type="button">play</button>
   <button id="stopButton" class="btn-transport" type="button">stop</button>
+  <button id="transportButton" class="btn-transport" type="button">start or stop transport</button>
   <fieldset>
     <legend>Use slider to control pitch shift</legend>
     <label id="pitchShiftLabel" for="pitchShiftSlider">0</label>
@@ -26,10 +27,8 @@
 <script src="js/Tone.js"></script>
 
 <script>
-
 // Create a pitch shifter and connect its output to the master out
 var pitchShift = new Tone.PitchShift().toMaster();
-
 // Create a synth and connect it to the pitch shifter
 var synth = new Tone.Synth({
   oscillator: {
@@ -42,11 +41,9 @@ var synth = new Tone.Synth({
     release: 1
   }
 }).connect(pitchShift);
-
 // Sample code to load a sound file
 // NOTE: This sound file is not played in this script
-var zedsDead = new Tone.Player('audio/zedsDead.mp3').connect(pitchShift);
-
+var clave = new Tone.Player('audio/clave.mp3').toMaster();
 // Bind slider value to pitch shift amount
 // Every change in slider value triggers change in pitch shift
 // It's silly to pitch shift a synthesizer, right?
@@ -59,23 +56,28 @@ pitchShiftSlider.addEventListener('input', function() {
   // update slider label
   pitchShiftLabel.innerHTML = pitchShiftSlider.value;
 });
+var loop = new Tone.Loop(function(time){
+	synth.triggerAttackRelease("C1", "8n", time);
+}, "4n");
 
-// The following block of code will run when the play button is clicked
 document.querySelector('#playButton').onclick = function() {
-  console.log('The play button has been clicked.');
+  console.log('The start button has been clicked.');
 
-  // Play a middle C, which will sound until the stop button is clicked
-  zedsDead.start();
+  loop.start();
 };
-
+// The following block of code will run when the play button is clicked
+document.querySelector('#transportButton').onclick = function() {
+  console.log('The transport button has been clicked.');
+  // start the audio context
+  Tone.context.resume();
+  Tone.Transport.toggle();
+};
 // The following block of code will run when the stop button is clicked
 document.querySelector('#stopButton').onclick = function() {
   console.log('The stop button has been clicked.');
-
   // Stop the note from sounding
-  synth.triggerRelease();
+  loop.stop();
 };
-
 </script>
 
 </body>
