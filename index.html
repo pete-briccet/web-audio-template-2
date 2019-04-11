@@ -14,8 +14,23 @@
 
 <main>
   <h2>Click the buttons to make (or stop) some sound:</h2>
-  <button id="playButton" class="btn-transport" type="button">play</button>
-  <button id="stopButton" class="btn-transport" type="button">stop</button>
+  <button id="loop1Button" class="btn-transport" type="button">Loop 1</button>
+  <button id="loop2Button" class="btn-transport" type="button">Loop 2</button>
+  <button id="loop3Button" class="btn-transport" type="button">Loop 3</button>
+  <button id="playButtonC" class="btn-transport" type="button">C</button>
+  <button id="playButtonCS" class="btn-transport" type="button">C#/Db</button>
+  <button id="playButtonD" class="btn-transport" type="button">D</button>
+  <button id="playButtonDS" class="btn-transport" type="button">D#/Eb</button>
+  <button id="playButtonE" class="btn-transport" type="button">E</button>
+  <button id="playButtonF" class="btn-transport" type="button">F</button>
+  <button id="playButtonFS" class="btn-transport" type="button">F#/Gb</button>
+  <button id="playButtonG" class="btn-transport" type="button">G</button>
+  <button id="playButtonGS" class="btn-transport" type="button">G#/Ab</button>
+  <button id="playButtonA" class="btn-transport" type="button">A</button>
+  <button id="playButtonAS" class="btn-transport" type="button">A#/Bb</button>
+  <button id="playButtonB" class="btn-transport" type="button">B</button>
+  <button id="playButtonHiC" class="btn-transport" type="button">Hi C</button>
+
   <fieldset>
     <legend>Use slider to control pitch shift</legend>
     <label id="pitchShiftLabel" for="pitchShiftSlider">0</label>
@@ -31,20 +46,44 @@
 var pitchShift = new Tone.PitchShift().toMaster();
 
 // Create a synth and connect it to the pitch shifter
-var synth = new Tone.Synth({
+
+var synthA = new Tone.Synth({
   oscillator: {
-    type: 'sawtooth'
+    type: 'fmsquare',
+    modulationType: 'triangle',
+    modulationIndex: 0,
+    harmonicity: 0
   },
   envelope: {
     attack: 0.01,
     decay: 0.1,
-    sustain: 0.5,
-    release: 1
+    sustain: 0.9,
+    release: 0.1
   }
-}).connect(pitchShift);
+}).toMaster()
+//
+// var synth = new Tone.Synth({
+//   oscillator: {
+//     type: 'sawtooth'
+//   },
+//   envelope: {
+//     attack: 0.01,
+//     decay: 0.1,
+//     sustain: 0.5,
+//     release: 1
+//   }
+// }).connect(pitchShift);
+
+//https://www.youtube.com/watch?v=344Tu2Tt0Bs link to jazzy Sample
+//https://www.youtube.com/watch?v=q0OKz40TFMY link to 1564 Sample
 
 // Sample code to load a sound file
 // NOTE: This sound file is not played in this script
+
+var piano1 = new Tone.Player('audio/Piano1.mp3').toMaster();
+var piano2 = new Tone.Player('audio/Piano2.mp3').toMaster();
+var piano3 = new Tone.Player('audio/Piano3.mp3').toMaster();
+
 var zedsDead = new Tone.Player('audio/zedsDead.mp3').connect(pitchShift);
 var fun1564 = new Tone.Player('audio/fun1564.mp3').toMaster();
 var jazzy251 = new Tone.Player('audio/jazzy251.mp3').connect(pitchShift);
@@ -62,12 +101,212 @@ pitchShiftSlider.addEventListener('input', function() {
   pitchShiftLabel.innerHTML = pitchShiftSlider.value;
 });
 
-// The following block of code will run when the play button is clicked
-document.querySelector('#playButton').onclick = function() {
-  console.log('The play button has been clicked.');
+// C
+document.querySelector('#playButtonC').addEventListener('mousedown', function() {
 
-  // Play a middle C, which will sound until the stop button is clicked
-  jazzy251.start();
+    synthA.triggerAttack('C4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonC').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+// C#
+
+document.querySelector('#playButtonCS').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('C#4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonCS').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+// D
+
+document.querySelector('#playButtonD').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('D4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonD').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+// D#
+
+document.querySelector('#playButtonDS').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('D#4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonDS').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+// E
+
+document.querySelector('#playButtonE').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('E4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonE').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+// F
+
+document.querySelector('#playButtonF').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('F4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonF').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+// F#
+
+document.querySelector('#playButtonFS').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('F#4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonFS').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+//G
+
+document.querySelector('#playButtonG').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('G4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonG').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+//G#
+
+document.querySelector('#playButtonGS').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('G#4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonGS').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+//A
+
+document.querySelector('#playButtonA').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('A4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonA').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+//A#
+
+document.querySelector('#playButtonAS').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('A#4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonAS').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+//B
+
+document.querySelector('#playButtonB').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('B4')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonB').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+//HiC
+
+document.querySelector('#playButtonHiC').addEventListener('mousedown', function() {
+
+    synthA.triggerAttack('C5')
+    synthA.volume.value = -20
+
+});
+
+document.querySelector('#playButtonHiC').addEventListener('mouseup', function() {
+
+    synthA.triggerRelease()
+})
+
+
+
+
+// The following block of code will run when the loop1 button is clicked
+document.querySelector('#loop1Button').onclick = function() {
+  console.log('The loop1Button has been clicked.');
+
+  // start loop 1
+  piano1.start();
+};
+
+// The following block of code will run when the loop2 button is clicked
+document.querySelector('#loop2Button').onclick = function() {
+  console.log('The loop2Button has been clicked.');
+
+  // start loop 2
+  piano2.start();
+};
+
+// The following block of code will run when the loop3 button is clicked
+document.querySelector('#loop3Button').onclick = function() {
+  console.log('The loop3Button has been clicked.');
+
+  // start loop 3
+  piano3.start();
 };
 
 // The following block of code will run when the stop button is clicked
