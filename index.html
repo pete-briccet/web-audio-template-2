@@ -3,17 +3,19 @@
 <html lang="en-US" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>TITLE.</title>
+  <title>EZ KeyZ</title>
   <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
 
 <header>
-  <h1>Welcome to Web Audio!</h1>
+  <h1>Welcome to Piano Synth Jam Session!</h1>
 </header>
 
 <main>
-  <h2>Click the buttons to make (or stop) some sound:</h2>
+  <h2>Click the loop buttons to play the piano loops </h2>
+  <h3>Use the Mouse or keyboard to play the synth </h3>
+  <h4><i>*Use in Firefox and disable quickfind by going to Firefox menu>Preferences>Advanced>General>uncheck "search for text when I start typing"*</i> </h4>
   <button id="loop1Button" class="btn-transport" type="button">Loop 1</button>
   <button id="loop2Button" class="btn-transport" type="button">Loop 2</button>
   <button id="loop3Button" class="btn-transport" type="button">Loop 3</button>
@@ -30,20 +32,12 @@
   <button id="playButtonAS" class="btn-transport" type="button">A#/Bb</button>
   <button id="playButtonB" class="btn-transport" type="button">B</button>
   <button id="playButtonHiC" class="btn-transport" type="button">Hi C</button>
-
-  <fieldset>
-    <legend>Use slider to control pitch shift</legend>
-    <label id="pitchShiftLabel" for="pitchShiftSlider">0</label>
-    <input type="range" id="pitchShiftSlider" name="pitchShiftSlider" min="-12" max="12" step="0.5" />
-  </fieldset>
-</main>
+  <button id="stopButton" class="btn-transport" type="button">Stop</button>
 
 <script src="js/Tone.js"></script>
 
 <script>
 
-// Create a pitch shifter and connect its output to the master out
-var pitchShift = new Tone.PitchShift().toMaster();
 
 // Create a synth and connect it to the pitch shifter
 
@@ -61,21 +55,6 @@ var synthA = new Tone.Synth({
     release: 0.1
   }
 }).toMaster()
-//
-// var synth = new Tone.Synth({
-//   oscillator: {
-//     type: 'sawtooth'
-//   },
-//   envelope: {
-//     attack: 0.01,
-//     decay: 0.1,
-//     sustain: 0.5,
-//     release: 1
-//   }
-// }).connect(pitchShift);
-
-//https://www.youtube.com/watch?v=344Tu2Tt0Bs link to jazzy Sample
-//https://www.youtube.com/watch?v=q0OKz40TFMY link to 1564 Sample
 
 // Sample code to load a sound file
 // NOTE: This sound file is not played in this script
@@ -84,22 +63,6 @@ var piano1 = new Tone.Player('audio/Piano1.mp3').toMaster();
 var piano2 = new Tone.Player('audio/Piano2.mp3').toMaster();
 var piano3 = new Tone.Player('audio/Piano3.mp3').toMaster();
 
-var zedsDead = new Tone.Player('audio/zedsDead.mp3').connect(pitchShift);
-var fun1564 = new Tone.Player('audio/fun1564.mp3').toMaster();
-var jazzy251 = new Tone.Player('audio/jazzy251.mp3').connect(pitchShift);
-
-// Bind slider value to pitch shift amount
-// Every change in slider value triggers change in pitch shift
-// It's silly to pitch shift a synthesizer, right?
-// But what else could we pitch shift?
-var pitchShiftLabel = document.querySelector('#pitchShiftLabel');
-var pitchShiftSlider = document.querySelector('#pitchShiftSlider');
-pitchShiftSlider.addEventListener('input', function() {
-  // assign slider value to pitch shift amount (in semitones)
-  pitchShift.pitch = pitchShiftSlider.value;
-  // update slider label
-  pitchShiftLabel.innerHTML = pitchShiftSlider.value;
-});
 
 // C
 document.querySelector('#playButtonC').addEventListener('mousedown', function() {
@@ -282,8 +245,15 @@ document.querySelector('#playButtonHiC').addEventListener('mouseup', function() 
     synthA.triggerRelease()
 })
 
+//StopButton
 
+document.querySelector('#stopButton').addEventListener('mousedown', function() {
+  console.log('The stopButton has been clicked.');
+  piano1.stop();
+  piano2.stop();
+  piano3.stop();
 
+});
 
 // The following block of code will run when the loop1 button is clicked
 document.querySelector('#loop1Button').onclick = function() {
@@ -291,6 +261,7 @@ document.querySelector('#loop1Button').onclick = function() {
 
   // start loop 1
   piano1.start();
+
 };
 
 // The following block of code will run when the loop2 button is clicked
@@ -309,13 +280,108 @@ document.querySelector('#loop3Button').onclick = function() {
   piano3.start();
 };
 
-// The following block of code will run when the stop button is clicked
-document.querySelector('#stopButton').onclick = function() {
-  console.log('The stop button has been clicked.');
+document.addEventListener('keydown', PlayIt);
 
-  // Stop the note from sounding
-  synth.triggerRelease();
-};
+function PlayIt(e) {
+    console.log(e.code);
+    if (e.code == 'KeyA') {
+      synthA.triggerAttack('C4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyW') {
+       synthA.triggerAttack('C#4');
+       synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyS') {
+      synthA.triggerAttack('D4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyE') {
+      synthA.triggerAttack('D#4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyD') {
+      synthA.triggerAttack('E4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyF') {
+      synthA.triggerAttack('F4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyT') {
+      synthA.triggerAttack('F#4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyG') {
+      synthA.triggerAttack('G4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyY') {
+      synthA.triggerAttack('G#4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyH') {
+      synthA.triggerAttack('A4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyU') {
+      synthA.triggerAttack('A#4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyJ') {
+      synthA.triggerAttack('B4');
+      synthA.volume.value = -20;
+    }
+    else if (e.code == 'KeyK') {
+      synthA.triggerAttack('C5');
+      synthA.volume.value = -20;
+    }};
+
+
+
+document.addEventListener('keyup', StopIt);
+
+function StopIt(e) {
+    console.log(e.code);
+    if (e.code == 'KeyA') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyW') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyS') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyE') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyD') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyF') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyT') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyG') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyY') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyH') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyU') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyJ') {
+      synthA.triggerRelease();
+    }
+    else if (e.code == 'KeyK') {
+      synthA.triggerRelease();
+    }};
 
 </script>
 
